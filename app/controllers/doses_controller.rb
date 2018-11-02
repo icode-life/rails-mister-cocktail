@@ -13,9 +13,10 @@ class DosesController < ApplicationController
 
   def create
     @dose = Dose.new(dose_params)
-    @dose.cocktail = Cocktail.find(params[:cocktail_id])
+    @cocktail = Cocktail.find(params[:cocktail_id])
+    @dose.cocktail = @cocktail
     if @dose.save
-      redirect_to cocktails_path
+      redirect_to new_cocktail_dose_path(@cocktail)
     else
       render :new
     end
@@ -23,12 +24,14 @@ class DosesController < ApplicationController
 
   def destroy
     @dose.delete
+    @cocktail = Cocktail.find(params[:cocktail_id])
+    redirect_to new_cocktail_dose_path(@cocktail)
   end
 
   private
 
   def find_dose
-    @dose = Cocktail.find(params[:id])
+    @dose = Dose.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

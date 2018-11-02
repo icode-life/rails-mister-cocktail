@@ -1,10 +1,22 @@
 <div class="container">
 <div class="row">
 <h1>let's mix it up</h1>
-<%= simple_form_for [@cocktail, @dose]  do |c| %>
-<%= c.association :ingredient, collection: @ingredients %>
-<%= c.input :description %>
-<%= c.submit %>
+ <h1><%= @cocktail.name %></h1>
+        <h3>Ingredients:</h3>
+        <table>
+        <% @cocktail.doses.each do |dose| %>
+          <% if dose.description == 1 %>
+            <tr><td>1 dose of <%= dose.ingredient.name %></td><td><%= link_to "Delete", cocktail_dose_path(@cocktail, dose), method: :delete, data: { confirm: "Are you sure?"} %></td></tr>
+          <% else %>
+            <tr><td><%= dose.description %> doses of <%= dose.ingredient.name %></td><td><%= link_to "Delete", cocktail_dose_path(@cocktail, dose), method: :delete, data: { confirm: "Are you sure?"} %></td></tr>
+          <% end %>
+        <% end %>
+        </table>
+        <%= simple_form_for [@cocktail, @dose], html: { class: "form-inline"} do |f| %>
+          <%= f.input :description, label: "Amount:", required: false, as: :integer, input_html: { style: 'width: 70px'} %>
+          <%= f.association :ingredient, label: "dose(s) of", prompt: "Select an ingredient", collection: Ingredient.order('name ASC'), required: false  %>
+          <%= f.button :submit, name: "", value: "Add" %>
+          <%=link_to 'Back', cocktails_path %>
 <% end %>
 </div>
 </div>

@@ -1,2 +1,7 @@
-<h1>Cocktails#show</h1>
-<p>Find me in app/views/cocktails/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <h1>Here is how it should look like</h1>
+      <p><%= @cocktail.name %></p>
+      <%= cl_image_tag(@cocktail.photo, height: 300, width: 400, crop: :fill) %>
+  </div>
+</div>

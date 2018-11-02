@@ -1,0 +1,10 @@
+<div class="container">
+<div class="row">
+<h1>let's mix it up</h1>
+<%= simple_form_for [@cocktail, @dose]  do |c| %>
+<%= c.association :ingredient, collection: @ingredients %>
+<%= c.input :description %>
+<%= c.submit %>
+<% end %>
+</div>
+</div>
